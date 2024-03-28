@@ -10,8 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
 // Адаптер для отображения списка персонажей в RecyclerView
-class CharacterAdapter(private val context: Context, private val characters: Results) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
+class CharacterAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var characters = listOf<Character>()
+    fun submitList (getMyCharacter: List<Character>){
+        characters = getMyCharacter
+        notifyDataSetChanged()
+    }
     // Статические константы для типов отображения в RecyclerView
     companion object {
         const val TYPE_IMAGE = 1
@@ -40,7 +44,7 @@ class CharacterAdapter(private val context: Context, private val characters: Res
 
     // Привязка данных к ViewHolder в зависимости от типа отображения
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val character = characters.results[position]
+        val character = characters[position]
 
         when (holder.itemViewType) {
             TYPE_IMAGE -> (holder as ImageViewHolder).bind(character)
@@ -52,13 +56,12 @@ class CharacterAdapter(private val context: Context, private val characters: Res
 
     // Получение типа отображения для позиции элемента
     override fun getItemViewType(position: Int): Int {
-        return characters.results[position].getType()
+        return characters[position].getType()
     }
 
     // Получение общего количества элементов в списке
-    override fun getItemCount(): Int {
-        return characters.results.size
-    }
+    override fun getItemCount(): Int = characters.size
+
 
     // ViewHolder для отображения изображения персонажа
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
