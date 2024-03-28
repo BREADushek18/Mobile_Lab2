@@ -39,6 +39,7 @@
                 layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
                 // Устанавливаем адаптер для RecyclerView
                 adapter = characterAdapter
+
             }
         }
     }
